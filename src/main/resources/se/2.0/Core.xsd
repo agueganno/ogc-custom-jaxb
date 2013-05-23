@@ -1325,15 +1325,16 @@
       <xsd:documentation>The transformation of continuous values to distinct values.</xsd:documentation>
     </xsd:annotation>
   </xsd:element>
+
   <xsd:complexType name="CategorizeType">
     <xsd:complexContent>
       <xsd:extension base="se:FunctionType">
         <xsd:sequence>
           <xsd:element ref="se:LookupValue"/>
-          <xsd:sequence minOccurs="0" maxOccurs="unbounded">
-            <xsd:element ref="se:Threshold"/>
-            <xsd:element ref="se:Value"/>
-          </xsd:sequence>
+          <xsd:element ref="se:FirstThreshold" minOccurs="0"/>
+          <xsd:element ref="se:FirstValue"/>
+          <xsd:element ref="se:CategorizedMapElement" minOccurs="0" maxOccurs="unbounded"/>
+          <xsd:element ref="se:LastThreshold" minOccurs="0"/>
       	  <xsd:element ref="se:Extension" minOccurs="0" />
         </xsd:sequence>
         <xsd:attribute name="thresholdBelongsTo"
@@ -1341,9 +1342,24 @@
       </xsd:extension>
     </xsd:complexContent>
   </xsd:complexType>
+
+  <xsd:complexType name="CategorizeMapElementType">
+      <xsd:sequence>
+            <xsd:element ref="se:Threshold"/>
+            <xsd:element ref="se:SecondThreshold" minOccurs="0"/>
+            <xsd:element ref="se:Value"/>
+      </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="CategorizedMapElement" type="se:CategorizeMapElementType"/>
+
   <xsd:element name="LookupValue" type="se:ParameterValueType"/>
   <xsd:element name="FirstValue" type="se:ParameterValueType"/>
   <xsd:element name="Threshold" type="fes:LiteralType"/>
+  <xsd:element name="SecondThreshold" type="fes:LiteralType"/>
+  <xsd:element name="FirstThreshold" type="fes:LiteralType"/>
+  <xsd:element name="LastThreshold" type="fes:LiteralType"/>
+
   <xsd:simpleType name="ThresholdBelongsToType">
     <xsd:restriction base="xsd:token">
       <xsd:enumeration value="succeeding"/>
